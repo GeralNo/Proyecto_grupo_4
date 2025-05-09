@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Préstamos{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Lista de Préstamos</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Estudiante</th>
+                    <th>Recurso</th>
+                    <th>Fecha Préstamo</th>
+                    <th>Fecha Devolución</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prestamo in prestamos %}
+                <tr>
+                    <td>{{ prestamo.codigoPrestamo }}</td>
+                    <td>{{ prestamo.estudiante.nombre }}</td>
+                    <td>{{ prestamo.recurso.nombre }}</td>
+                    <td>{{ prestamo.fechaPrestamo.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ prestamo.fechaDevolucion.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ prestamo.estadoPrestamo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-md-6">
+        <h2>Realizar Nuevo Préstamo</h2>
+        <form method="POST" action="{{ url_for('prestar') }}">
+            <div class="mb-3">
+                <label for="codigoEstudiante" class="form-label">Código Estudiante</label>
+                <input type="text" class="form-input" id="codigoEstudiante" name="codigoEstudiante" required>
+            </div>
+            <div class="mb-3">
+                <label for="codigoRecurso" class="form-label">Código Recurso</label>
+                <input type="text" class="form-input" id="codigoRecurso" name="codigoRecurso" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Realizar Préstamo</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
